@@ -8,20 +8,24 @@ public class GameManagement : MonoBehaviour
     public static GameManagement instance;
     GameObject[] _colorCubes = new GameObject[16];
     GameObject[] _selectedCubes = new GameObject[2];
-    [SerializeField] GameObject _cubePrefab;
+    [SerializeField] GameObject _cubePrefab, countdownTextObj, timerObj;
 
     public Color[] _colorsOfCubes = new Color[16];
     Color[] colors = new Color[8];
 
     int colorCubesCount = 0, selectedCount = 0, wrongSelectCount = 0;
-    int rand;
+    int rand, phaseCount = 2, phases = 2;
+
+    float score;
 
     List<int> indexList = new List<int>();
 
     bool[] isCubeColored = new bool[16];
     public bool isColorHiding, canSelect;
 
-    Vector3 instantiateAnchor = new Vector3 (0, 0, 0);
+    Vector3 instantiateAnchor = Vector3.zero;
+
+    
 
     private void Awake()
     {
@@ -47,6 +51,7 @@ public class GameManagement : MonoBehaviour
         colors[7] = new Color(0f, 0f, 0f);
         StartCoroutine(CreateCubes());
         canSelect = true;
+        score = 0f;
     }
 
     
@@ -79,6 +84,8 @@ public class GameManagement : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
         }
+        instantiateAnchor = Vector3.zero;
+        phaseCount--;
         StartCoroutine(SetColors());
     }
     
@@ -120,12 +127,23 @@ public class GameManagement : MonoBehaviour
     {
         for(int i = 0; i < isCubeColored.Length; i++)
         {
-            if (isCubeColored[i])
+            if (isCubeColored[i] && _colorCubes[i] != null)
             {
                 _colorCubes[i].GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f);
             }
         }
         isColorHiding = true;
+        //Debug.Log("phaseCount : " + phaseCount + "------ phases : " + phases);
+        if(phaseCount == phases - 1)
+        {
+            timerObj.SetActive(true);
+        }
+        else
+        {
+            Timer.instance.SetDuration(1f, 15f);
+            Timer.instance.StartTimer();
+        }
+
     }
     void HideSelectedColors()
     {
@@ -136,7 +154,7 @@ public class GameManagement : MonoBehaviour
     {
         for(int i = 0; i < _colorCubes.Length; i++)
         {
-            if (isCubeColored[i])
+            if (isCubeColored[i] && _colorCubes[i] != null)
             {
                 _colorCubes[i].GetComponent<MeshRenderer>().material.color = _colorsOfCubes[i];
             }
@@ -184,20 +202,42 @@ public class GameManagement : MonoBehaviour
         _selectedCubes[1].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
         Destroy(_selectedCubes[0], 2f);
         Destroy(_selectedCubes[1], 2f);
+        colorCubesCount -= 2;
+        if(colorCubesCount == 0)
+        {
+            Invoke("EndGameCheck", 1f);
+        }
         Invoke("SetCanSelect", 0.5f);
     }
     void MatchWrong()
     {
         Debug.Log("Match Wrong");
         wrongSelectCount++;
+        if (score > 30) { score -= 30; }
         Invoke("HideSelectedColors", 1f);
         Invoke("SetCanSelect", 1.1f);
+    }
+
+    void NextPhase()
+    {
+
     }
     void SetCanSelect()
     {
         canSelect = true;
     }
 
+    void EndGameCheck()
+    {
+        if(phaseCount > 0)
+        {
+            Timer.instance.StopTimer();
+            SetFalse();
+            StartCoroutine(CreateCubes());
+            countdownTextObj.SetActive(true);
+        }
+        
+    }
     IEnumerator delayFor(float _sec)
     {
         yield return new WaitForSeconds(_sec);

@@ -42,7 +42,7 @@ public class MouseFeedback : MonoBehaviour
     {
         //Debug.Log(_index + ". index color : " + GameManagement.instance._colorsOfCubes[_index]);
         Debug.Log(GameManagement.instance.canSelect);
-        if (GameManagement.instance.canSelect)
+        if (GameManagement.instance.canSelect && GameManagement.instance.isColorHiding)
         {
             _renderer.material.color = GameManagement.instance._colorsOfCubes[_index];
             GameManagement.instance.CubeSelect(_index);
