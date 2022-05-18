@@ -5,21 +5,39 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour
 {
+    public static GameManagement instance;
     GameObject[] _colorCubes = new GameObject[16];
-    [SerializeField] GameObject _cubePrefab;
+    GameObject[] _selectedCubes = new GameObject[2];
+    [SerializeField] GameObject _cubePrefab, countdownTextObj, timerObj;
 
-    Color[] _colorsOfCubes = new Color[16];
+    public Color[] _colorsOfCubes = new Color[16];
     Color[] colors = new Color[8];
 
-    int _colorCubesCount = 0;
-    int rand;
+    int colorCubesCount = 0, selectedCount = 0, wrongSelectCount = 0;
+    int rand, phaseCount = 2, phases = 2;
+
+    float score;
 
     List<int> indexList = new List<int>();
 
     bool[] isCubeColored = new bool[16];
+    public bool isColorHiding, canSelect;
 
-    Vector3 instantiateAnchor = new Vector3 (0, 0, 0);
+    Vector3 instantiateAnchor = Vector3.zero;
 
+    
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+
+        }
+    }
     void Start()
     {
         SetFalse();
@@ -32,6 +50,8 @@ public class GameManagement : MonoBehaviour
         colors[6] = new Color(0f, 1f, 1f);
         colors[7] = new Color(0f, 0f, 0f);
         StartCoroutine(CreateCubes());
+        canSelect = true;
+        score = 0f;
     }
 
     
@@ -40,7 +60,6 @@ public class GameManagement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             ShowColors();
-            //checkColor();
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
@@ -54,8 +73,9 @@ public class GameManagement : MonoBehaviour
         {
             _colorCubes[i] = Instantiate(_cubePrefab, instantiateAnchor, Quaternion.identity) as GameObject;
             _colorCubes[i].name = "ColorCube" + i;
+            _colorCubes[i].GetComponent<MouseFeedback>()._index = i;
             indexList.Add(i);
-            _colorCubesCount++;
+            colorCubesCount++;
             instantiateAnchor = instantiateAnchor + new Vector3 (1.25f, 0, 0);
             if((i + 1) % 4 == 0)
             {
@@ -64,6 +84,8 @@ public class GameManagement : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
         }
+        instantiateAnchor = Vector3.zero;
+        phaseCount--;
         StartCoroutine(SetColors());
     }
     
@@ -105,35 +127,119 @@ public class GameManagement : MonoBehaviour
     {
         for(int i = 0; i < isCubeColored.Length; i++)
         {
-            if (isCubeColored[i])
+            if (isCubeColored[i] && _colorCubes[i] != null)
             {
                 _colorCubes[i].GetComponent<MeshRenderer>().material.color = new Color(1f, 1f, 1f);
             }
         }
+        isColorHiding = true;
+        //Debug.Log("phaseCount : " + phaseCount + "------ phases : " + phases);
+        if(phaseCount == phases - 1)
+        {
+            timerObj.SetActive(true);
+        }
+        else
+        {
+            Timer.instance.SetDuration(1f, 15f);
+            Timer.instance.StartTimer();
+        }
+
+    }
+    void HideSelectedColors()
+    {
+        _selectedCubes[0].GetComponent<MeshRenderer>().material.color = Color.white;
+        _selectedCubes[1].GetComponent<MeshRenderer>().material.color = Color.white;
     }
     void ShowColors()
     {
         for(int i = 0; i < _colorCubes.Length; i++)
         {
-            if (isCubeColored[i])
+            if (isCubeColored[i] && _colorCubes[i] != null)
             {
                 _colorCubes[i].GetComponent<MeshRenderer>().material.color = _colorsOfCubes[i];
             }
         }
+        isColorHiding = false;
     }
 
-    void checkColor()
+    public void CubeSelect(int selectedIndex)
     {
-        for(int i = 0; i< _colorsOfCubes.Length; i++)
+        if(selectedCount < 2)
         {
-            if(_colorsOfCubes[i] == null)
+            _selectedCubes[selectedCount] = _colorCubes[selectedIndex];
+            selectedCount++;
+            if (selectedCount == 2)
             {
-                Debug.Log("Hata indisi : " + i);
-            }
-            else
-            {
-                Debug.Log(i + ".) Cube's Color : " + _colorsOfCubes[i]);
+                selectedCount = 0;
+                canSelect = false;
+                CheckColor();
             }
         }
+        else
+        {
+            selectedCount = 0;
+        }
+    }
+
+    void CheckColor()
+    {
+        if (_selectedCubes[0].GetComponent<MeshRenderer>().material.color == _selectedCubes[1].GetComponent<MeshRenderer>().material.color)
+        {
+            MatchCorrect();
+        }
+        else
+        {
+            MatchWrong();
+        }
+    }
+
+    void MatchCorrect()
+    {
+        Debug.Log("Match Correct");
+        _selectedCubes[0].AddComponent<Rigidbody>();
+        _selectedCubes[0].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
+        _selectedCubes[1].AddComponent<Rigidbody>();
+        _selectedCubes[1].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
+        Destroy(_selectedCubes[0], 2f);
+        Destroy(_selectedCubes[1], 2f);
+        colorCubesCount -= 2;
+        if(colorCubesCount == 0)
+        {
+            Invoke("EndGameCheck", 1f);
+        }
+        Invoke("SetCanSelect", 0.5f);
+    }
+    void MatchWrong()
+    {
+        Debug.Log("Match Wrong");
+        wrongSelectCount++;
+        if (score > 30) { score -= 30; }
+        Invoke("HideSelectedColors", 1f);
+        Invoke("SetCanSelect", 1.1f);
+    }
+
+    void NextPhase()
+    {
+
+    }
+    void SetCanSelect()
+    {
+        canSelect = true;
+    }
+
+    void EndGameCheck()
+    {
+        if(phaseCount > 0)
+        {
+            Timer.instance.StopTimer();
+            SetFalse();
+            StartCoroutine(CreateCubes());
+            countdownTextObj.SetActive(true);
+        }
+        
+    }
+    IEnumerator delayFor(float _sec)
+    {
+        yield return new WaitForSeconds(_sec);
     }
 }
