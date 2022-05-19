@@ -31,7 +31,7 @@ public class Timer : MonoBehaviour
         Debug.Log("Enabled Timer");
         CO = UpdateTimer();
         SetDuration(2f, 30f);
-        timerText.text = "0" + durationMinute.ToString() + ":" + "0" + durationSecond.ToString();
+        SetTimerText();
         StartCoroutine(CO);
     }
 
