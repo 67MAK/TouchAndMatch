@@ -58,6 +58,10 @@ public class Level1Manager : MonoBehaviour
         {
             HideColors();
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Timer.Instance.SetDuration(3f, 0f);
+        }
     }
 
     IEnumerator CreateCubes()
@@ -109,7 +113,7 @@ public class Level1Manager : MonoBehaviour
         if (phasesLeft == totalPhases)
         {
             timerObj.SetActive(true);
-            phasesLeftTextObj.SetActive(true);
+            //phasesLeftTextObj.SetActive(true);
             Timer.Instance.SetDuration(2f, 30f);
         }
         else
