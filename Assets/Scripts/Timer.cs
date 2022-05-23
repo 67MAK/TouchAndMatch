@@ -5,20 +5,20 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public static Timer instance;
+    public static Timer Instance;
     [SerializeField] Text timerText;
     [SerializeField] Image timerCircle;
 
-    float durationMinute, durationSecond, totalDuration;
+    public float durationMinute, durationSecond, totalDuration;
     float currentTime;
 
-    IEnumerator CO;
+    IEnumerator UT, ST;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -29,35 +29,50 @@ public class Timer : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("Enabled Timer");
+<<<<<<< Updated upstream
         CO = UpdateTimer();
         SetDuration(2f, 30f);
         timerText.text = "0" + durationMinute.ToString() + ":" + "0" + durationSecond.ToString();
         StartCoroutine(CO);
+=======
+        UT = UpdateTimer();
+        ST = StopTimerCase();
+        SetDuration(0f, 10f);
+        SetTimerText();
+        StartCoroutine(UT);
+>>>>>>> Stashed changes
     }
 
     public void StartTimer()
     {
-        StartCoroutine(CO);
+        StopCoroutine(ST);
+        timerCircle.gameObject.SetActive(true);
+        timerText.gameObject.SetActive(true);
+        StartCoroutine(UT);
     }
     public void StopTimer()
     {
-        StopCoroutine(CO);
+        StartCoroutine(ST);
+        StopCoroutine(UT);
     }
     public void SetDuration(float min, float sec) 
     { 
         durationMinute = min; 
         durationSecond = sec;
-        totalDuration = (durationMinute * 60f) + durationSecond;
+        totalDuration = GetDuration();
         currentTime = totalDuration;
         timerCircle.fillAmount = 1f;
     }
-
+    public float GetDuration()
+    {
+        return (durationMinute * 60f) + durationSecond;
+    }
 
     void SetTimerText()
     {
         if(durationSecond < 10)
         {
-            timerText.text = "0" + durationMinute.ToString() + ":" + "0" + durationSecond.ToString();
+            timerText.text = "0" + durationMinute.ToString() + ":0" + durationSecond.ToString();
         }
         else
         {
@@ -81,7 +96,11 @@ public class Timer : MonoBehaviour
             yield return new WaitForSeconds(1f);
             if (durationSecond == 0)
             {
-                if (durationMinute == 0) break;
+                if (durationMinute == 0)
+                {
+                    Level1Manager.Instance.TimesUpProcess();
+                    break;
+                }
                 durationMinute -= 1;
                 durationSecond = 59f;
             }
@@ -95,5 +114,18 @@ public class Timer : MonoBehaviour
         SetTimerText();
         SetCircle();
         yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerator StopTimerCase()
+    {
+        while (true)
+        {
+            timerCircle.gameObject.SetActive(false);
+            timerText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+            timerCircle.gameObject.SetActive(true);
+            timerText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }
