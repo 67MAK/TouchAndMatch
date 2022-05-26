@@ -25,7 +25,7 @@ public class Level1Manager : MonoBehaviour
 
     int colorCubesCount = 0, selectedCount = 0;
     int rand;
-    int phasesLeft = 3, totalPhases = 3;
+    int phasesLeft, totalPhases = 3;
     private void Awake()
     {
         if (Instance == null)
@@ -36,6 +36,7 @@ public class Level1Manager : MonoBehaviour
     void Start()
     {
         SetFalse();
+        phasesLeft = totalPhases;
         colors[0] = new Color(1f, 0f, 0.784f);
         colors[1] = new Color(0.078f, 0f, 1f);
         colors[2] = new Color(1f, 1f, 0f);
@@ -109,12 +110,15 @@ public class Level1Manager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(2f);
+        Debug.Log("Before Color Hiding");
         HideColors();
+        Debug.Log("After Color Hiding");
         if (phasesLeft == totalPhases)
         {
             timerObj.SetActive(true);
-            //phasesLeftTextObj.SetActive(true);
+            phasesLeftTextObj.SetActive(true);
             Timer.Instance.SetDuration(2f, 30f);
+            Timer.Instance.StartTimer();
         }
         else
         {
@@ -132,7 +136,7 @@ public class Level1Manager : MonoBehaviour
         }
         isColorHiding = true;
         SetCanSelect();
-        //Debug.Log("phaseCount : " + phaseCount + "------ phases : " + phases);
+        Debug.Log("phaseCount : " + phasesLeft + "------ phases : " + totalPhases);
 
     }
     void HideSelectedColors()

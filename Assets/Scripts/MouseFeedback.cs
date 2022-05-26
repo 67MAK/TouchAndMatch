@@ -32,24 +32,27 @@ public class MouseFeedback : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (GameManagement.instance.isColorHiding)
+        if (Level1Manager.Instance.isColorHiding)
         {
-            _renderer.material.SetFloat("_Metallic", 1f);
+            transform.position += new Vector3(0, 0.1f, 0); 
         }
     }
 
     private void OnMouseDown()
     {
-        //Debug.Log(_index + ". index color : " + GameManagement.instance._colorsOfCubes[_index]);
-        Debug.Log(GameManagement.instance.canSelect);
-        if (GameManagement.instance.canSelect && GameManagement.instance.isColorHiding)
+        //Debug.Log(_index + ". index color : " + Level1Manager.Instance._colorsOfCubes[_index]);
+        Debug.Log(Level1Manager.Instance.canSelect);
+        if (Level1Manager.Instance.canSelect && Level1Manager.Instance.isColorHiding)
         {
-            _renderer.material.color = GameManagement.instance._colorsOfCubes[_index];
-            GameManagement.instance.CubeSelect(_index);
+            _renderer.material.color = Level1Manager.Instance._colorsOfCubes[_index];
+            Level1Manager.Instance.CubeSelect(_index);
         }
     }
     private void OnMouseExit()
     {
-        _renderer.material.SetFloat("_Metallic", 0f);
+        if (Level1Manager.Instance.isColorHiding)
+        {
+            transform.position -= new Vector3(0, 0.1f, 0);
+        }
     }
 }

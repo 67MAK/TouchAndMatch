@@ -31,16 +31,16 @@ public class Timer : MonoBehaviour
         Debug.Log("Enabled Timer");
         UT = UpdateTimer();
         ST = StopTimerCase();
-        SetDuration(0f, 10f);
+        SetDuration(0f, 0f);
         SetTimerText();
-        StartCoroutine(UT);
+        //StartCoroutine(UT);
     }
 
     public void StartTimer()
     {
         StopCoroutine(ST);
-        timerCircle.gameObject.SetActive(true);
-        timerText.gameObject.SetActive(true);
+        if(!timerCircle.gameObject.activeInHierarchy) timerCircle.gameObject.SetActive(true);
+        if(!timerText.gameObject.activeInHierarchy) timerText.gameObject.SetActive(true);
         StartCoroutine(UT);
     }
     public void StopTimer()
@@ -83,7 +83,6 @@ public class Timer : MonoBehaviour
 
     IEnumerator UpdateTimer()
     {
-        Debug.Log("Numerator içi :: " + durationMinute);
         while (durationMinute >= 0)
         {
             yield return new WaitForSeconds(1f);
