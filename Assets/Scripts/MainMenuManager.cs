@@ -32,6 +32,10 @@ public class MainMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void Level2Button()
+    {
+        SceneManager.LoadScene(2);
+    }
 
     public void CreditsButton()
     {

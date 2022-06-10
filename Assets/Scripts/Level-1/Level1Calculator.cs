@@ -33,7 +33,8 @@ public class Level1Calculator : MonoBehaviour
     void CalculateScore()
     {
         Score += Timer.Instance.GetDuration() * 10;
-        if (wrongSelectCount > 3)
+
+        if (wrongSelectCount > 6)
         {
             if (Score > 60f) Score -= 60f;
             else if (Score <= 60f) Score = 0f;

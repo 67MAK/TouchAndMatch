@@ -6,8 +6,12 @@ using UnityEngine.UI;
 public class Level1Manager : MonoBehaviour
 {
     public static Level1Manager Instance;
+    
     [SerializeField]
     GameObject _cubePrefab, timerObj, endGameScreen, timesUpScreen, phasesLeftTextObj;
+    [SerializeField]
+    public GameObject pauseScreen;
+
     GameObject[] _colorCubes = new GameObject[16];
     GameObject[] _selectedCubes = new GameObject[2];
 
@@ -17,15 +21,17 @@ public class Level1Manager : MonoBehaviour
     Color[] colors = new Color[8];
 
     List<int> indexList = new List<int>();
+    int[] _selectedIndex = new int[2];
 
     bool[] isCubeColored = new bool[16];
-    public bool isColorHiding, canSelect;
+    public bool isColorHiding, canSelect, gameEnded, gamePaused;
 
     Vector3 instantiateAnchor = Vector3.zero;
 
     int colorCubesCount = 0, selectedCount = 0;
     int rand;
     int phasesLeft, totalPhases = 3;
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,6 +41,7 @@ public class Level1Manager : MonoBehaviour
     }
     void Start()
     {
+        gameEnded = false;
         SetFalse();
         phasesLeft = totalPhases;
         colors[0] = new Color(1f, 0f, 0.784f);
@@ -73,7 +80,7 @@ public class Level1Manager : MonoBehaviour
         {
             _colorCubes[i] = Instantiate(_cubePrefab, instantiateAnchor, Quaternion.identity) as GameObject;
             _colorCubes[i].name = "ColorCube" + i;
-            _colorCubes[i].GetComponent<MouseFeedback>()._index = i;
+            _colorCubes[i].GetComponent<Level1MouseFeedback>()._index = i;
             indexList.Add(i);
             colorCubesCount++;
             instantiateAnchor = instantiateAnchor + new Vector3(1.25f, 0, 0);
@@ -117,7 +124,7 @@ public class Level1Manager : MonoBehaviour
         {
             timerObj.SetActive(true);
             phasesLeftTextObj.SetActive(true);
-            Timer.Instance.SetDuration(2f, 30f);
+            Timer.Instance.SetDuration(1f, 30f);
             Timer.Instance.StartTimer();
         }
         else
@@ -159,20 +166,19 @@ public class Level1Manager : MonoBehaviour
 
     public void CubeSelect(int selectedIndex)
     {
-        if (selectedCount < 2)
+        if (selectedCount == 0)
         {
             _selectedCubes[selectedCount] = _colorCubes[selectedIndex];
+            _selectedIndex[selectedCount] = selectedIndex;
             selectedCount++;
-            if (selectedCount == 2)
-            {
-                selectedCount = 0;
-                canSelect = false;
-                CheckColor();
-            }
         }
-        else
+        else if (selectedCount == 1 && _selectedCubes[0].GetComponent<Level1MouseFeedback>()._index != selectedIndex)
         {
+            _selectedCubes[selectedCount] = _colorCubes[selectedIndex];
+            _selectedIndex[selectedCount] = selectedIndex;
             selectedCount = 0;
+            canSelect = false;
+            CheckColor();
         }
     }
 
@@ -191,6 +197,10 @@ public class Level1Manager : MonoBehaviour
     {
         Debug.Log("Match Correct");
         Level1Calculator.Instance.Score += 50f;
+        //_selectedCubes[0].GetComponent<Level1MouseFeedback>().enabled = false;
+        //_selectedCubes[1].GetComponent <Level1MouseFeedback>().enabled = false;
+        _selectedCubes[0].GetComponent<Level1MouseFeedback>().isCorrected = true;
+        _selectedCubes[1].GetComponent<Level1MouseFeedback>().isCorrected = true;
         _selectedCubes[0].AddComponent<Rigidbody>();
         _selectedCubes[0].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
         _selectedCubes[1].AddComponent<Rigidbody>();
@@ -201,7 +211,6 @@ public class Level1Manager : MonoBehaviour
         if (colorCubesCount == 0)
         {
             phasesLeft--;
-            Timer.Instance.StopTimer();
             Invoke("EndGameCheck", 1f);
         }
         Invoke("SetCanSelect", 0.5f);
@@ -231,18 +240,24 @@ public class Level1Manager : MonoBehaviour
         }
         else
         {
-            Timer.Instance.StopTimer();
             EndGameProcess();
         }
 
     }
     void EndGameProcess()
     {
-        Time.timeScale = 0f;
+        gameEnded = true;
         endGameScreen.SetActive(true);
+        Timer.Instance.StopTimer();
         Level1Calculator.Instance.SetEndGameText();
     }
-
+    public void PauseGameProcess()
+    {
+        gamePaused = true;
+        canSelect = false;
+        Time.timeScale = 0f;
+        pauseScreen.gameObject.SetActive(true);
+    }
     public void TimesUpProcess()
     {
         Time.timeScale = 0f;

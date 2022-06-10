@@ -5,17 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Level1MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void RestartButton()
     {
@@ -27,5 +16,21 @@ public class Level1MenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
+    }
+
+    public void PauseButton()
+    {
+        if (!Level1Manager.Instance.gameEnded)
+        {
+            Level1Manager.Instance.PauseGameProcess();
+        }
+    }
+
+    public void ContinueButton()
+    {
+        Level1Manager.Instance.pauseScreen.SetActive(false);
+        Level1Manager.Instance.gamePaused = false;
+        Time.timeScale = 1f;
+        Level1Manager.Instance.Invoke("SetCanSelect", 0.5f);
     }
 }

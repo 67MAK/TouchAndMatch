@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level2MouseFeedback : MonoBehaviour
+public class Level1MouseFeedback : MonoBehaviour
 {
     Renderer _renderer;
 
@@ -16,7 +16,6 @@ public class Level2MouseFeedback : MonoBehaviour
             instance = this;
         }
     }*/
-
     void Start()
     {
         _renderer = GetComponent<Renderer>();
@@ -24,7 +23,7 @@ public class Level2MouseFeedback : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (Level2Manager.Instance.isColorHiding && !Level2Manager.Instance.gamePaused)
+        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused)
         {
             transform.localScale += new Vector3(0, 0.2f, 0);
         }
@@ -32,18 +31,18 @@ public class Level2MouseFeedback : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Level2Manager.Instance.canSelect && Level2Manager.Instance.isColorHiding)
+        if (Level1Manager.Instance.canSelect && Level1Manager.Instance.isColorHiding)
         {
             if (!isCorrected)
             {
-                _renderer.material.color = Level2Manager.Instance._colorsOfCubes[_index];
-                Level2Manager.Instance.CubeSelect(_index);
+                _renderer.material.color = Level1Manager.Instance._colorsOfCubes[_index];
+                Level1Manager.Instance.CubeSelect(_index);
             }
         }
     }
     private void OnMouseExit()
     {
-        if (Level2Manager.Instance.isColorHiding && !Level2Manager.Instance.gamePaused)
+        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused)
         {
             transform.localScale -= new Vector3(0, 0.2f, 0);
         }
