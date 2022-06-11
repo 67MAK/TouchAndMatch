@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Level2MenuManager : MonoBehaviour
+public class Level3MenuManager : MonoBehaviour
 {
     public void RestartButton()
     {
@@ -19,9 +19,9 @@ public class Level2MenuManager : MonoBehaviour
 
     public void PauseButton()
     {
-        if (!Level2Manager.Instance.gameEnded)
+        if (!Level3Manager.Instance.gameEnded)
         {
-            Level2Manager.Instance.PauseGameProcess();
+            Level3Manager.Instance.PauseGameProcess();
         }
     }
     public void NextLevelButton()
@@ -31,17 +31,17 @@ public class Level2MenuManager : MonoBehaviour
 
     public void ContinueButton()
     {
-        Level2Manager.Instance.pauseScreen.SetActive(false);
-        Level2Manager.Instance.gamePaused = false;
+        Level3Manager.Instance.pauseScreen.SetActive(false);
+        Level3Manager.Instance.gamePaused = false;
         Time.timeScale = 1f;
-        Level2Manager.Instance.Invoke("SetCanSelect", 0.5f);
+        Level3Manager.Instance.Invoke("SetCanSelect", 0.5f);
     }
     public void ShowColorsButton()
     {
-        if (Level2Manager.Instance.isColorHiding && !Level2Manager.Instance.gameEnded && !Level2Manager.Instance.gamePaused)
+        if (Level3Manager.Instance.isColorHiding && !Level3Manager.Instance.gameEnded && !Level3Manager.Instance.gamePaused)
         {
             //FindObjectOfType<AudioManager>().Play("ClickSound");
-            StartCoroutine(Level2Calculator.Instance.ShowColorProcess());
+            StartCoroutine(Level3Calculator.Instance.ShowColorProcess());
         }
     }
 }

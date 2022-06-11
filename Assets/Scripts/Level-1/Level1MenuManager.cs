@@ -25,6 +25,10 @@ public class Level1MenuManager : MonoBehaviour
             Level1Manager.Instance.PauseGameProcess();
         }
     }
+    public void NextLevelButton()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
     public void ContinueButton()
     {
