@@ -8,6 +8,7 @@ public class Timer : MonoBehaviour
     public static Timer Instance;
     [SerializeField] Text timerText;
     [SerializeField] Image timerCircle;
+    [SerializeField] GameObject currentLevelManager;
 
     public float durationMinute, durationSecond, totalDuration;
     float currentTime;
@@ -28,7 +29,6 @@ public class Timer : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log("Enabled Timer");
         UT = UpdateTimer();
         ST = StopTimerCase();
         SetDuration(0f, 0f);
@@ -90,7 +90,7 @@ public class Timer : MonoBehaviour
             {
                 if (durationMinute == 0)
                 {
-                    Level1Manager.Instance.TimesUpProcess();
+                    SendTimesUpMsg();
                     break;
                 }
                 durationMinute -= 1;
@@ -119,5 +119,12 @@ public class Timer : MonoBehaviour
             timerText.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    void SendTimesUpMsg()
+    {
+        if (currentLevelManager.GetComponent<Level1Manager>() != null) currentLevelManager.GetComponent<Level1Manager>().TimesUpProcess();
+        else if (currentLevelManager.GetComponent<Level2Manager>() != null) currentLevelManager.GetComponent<Level2Manager>().TimesUpProcess();
+        else if (currentLevelManager.GetComponent<Level3Manager>() != null) currentLevelManager.GetComponent<Level3Manager>().TimesUpProcess();
     }
 }

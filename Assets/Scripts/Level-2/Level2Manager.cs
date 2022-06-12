@@ -125,9 +125,7 @@ public class Level2Manager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(2f);
-        Debug.Log("Before Color Hiding");
         HideColors();
-        Debug.Log("After Color Hiding");
         if (phasesLeft == totalPhases)
         {
             timerObj.SetActive(true);
@@ -153,7 +151,6 @@ public class Level2Manager : MonoBehaviour
         }
         isColorHiding = true;
         SetCanSelect();
-        Debug.Log("phaseCount : " + phasesLeft + "------ phases : " + totalPhases);
 
     }
     void HideSelectedColors()
@@ -205,7 +202,6 @@ public class Level2Manager : MonoBehaviour
     }
     void MatchCorrect()
     {
-        Debug.Log("Match Correct");
         Level2Calculator.Instance.Score += 50f;
         _selectedCubes[0].GetComponent<Level2MouseFeedback>().isCorrected = true;
         _selectedCubes[1].GetComponent<Level2MouseFeedback>().isCorrected = true;
@@ -225,7 +221,6 @@ public class Level2Manager : MonoBehaviour
     }
     void MatchWrong()
     {
-        Debug.Log("Match Wrong");
         Level2Calculator.Instance.wrongSelectCount++;
         if (Level2Calculator.Instance.Score > 30f)
         {
@@ -244,7 +239,6 @@ public class Level2Manager : MonoBehaviour
         {
             SetFalse();
             StartCoroutine(CreateCubes());
-            //countdownTextObj.SetActive(true);
         }
         else
         {

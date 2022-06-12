@@ -215,7 +215,6 @@ public class Level3Manager : MonoBehaviour
     }
     void MatchCorrect()
     {
-        Debug.Log("Match Correct");
         Level3Calculator.Instance.Score += 50f;
         for(int i = 0; i < _selectedCubes.Length; i++)
         {
@@ -234,7 +233,6 @@ public class Level3Manager : MonoBehaviour
     }
     void MatchWrong()
     {
-        Debug.Log("Match Wrong");
         Level3Calculator.Instance.wrongSelectCount++;
         if (Level3Calculator.Instance.Score > 30f)
         {

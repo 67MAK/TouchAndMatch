@@ -8,6 +8,6 @@ public class WaterManager : MonoBehaviour
     {
         other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         other.gameObject.GetComponent<Rigidbody>().drag = 1f;
-        Destroy(other.gameObject, 2f);
+        Destroy(other.gameObject, 3f);
     }
 }
