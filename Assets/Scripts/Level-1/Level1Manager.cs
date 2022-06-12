@@ -41,6 +41,8 @@ public class Level1Manager : MonoBehaviour
     }
     void Start()
     {
+        FindObjectOfType<AudioManager>().Play("Waterfall");
+        FindObjectOfType<AudioManager>().Play("Floating");
         gameEnded = false;
         SetFalse();
         phasesLeft = totalPhases;
@@ -89,6 +91,7 @@ public class Level1Manager : MonoBehaviour
                 instantiateAnchor = new Vector3(0, 0, instantiateAnchor.z);
                 instantiateAnchor = instantiateAnchor + new Vector3(0, 0, 1.25f);
             }
+            FindObjectOfType<AudioManager>().Play("CubeIns");
             yield return new WaitForSeconds(0.2f);
         }
         instantiateAnchor = Vector3.zero;
@@ -114,6 +117,7 @@ public class Level1Manager : MonoBehaviour
                     colorIndex++;
                 }
             }
+            FindObjectOfType<AudioManager>().Play("SetColor");
             yield return new WaitForSeconds(0.2f);
         }
         yield return new WaitForSeconds(2f);
@@ -192,17 +196,14 @@ public class Level1Manager : MonoBehaviour
     }
     void MatchCorrect()
     {
+        FindObjectOfType<AudioManager>().Play("Correct");
         Level1Calculator.Instance.Score += 50f;
-        //_selectedCubes[0].GetComponent<Level1MouseFeedback>().enabled = false;
-        //_selectedCubes[1].GetComponent <Level1MouseFeedback>().enabled = false;
         _selectedCubes[0].GetComponent<Level1MouseFeedback>().isCorrected = true;
         _selectedCubes[1].GetComponent<Level1MouseFeedback>().isCorrected = true;
         _selectedCubes[0].AddComponent<Rigidbody>();
         _selectedCubes[0].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
         _selectedCubes[1].AddComponent<Rigidbody>();
         _selectedCubes[1].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
-        //Destroy(_selectedCubes[0], 2f);
-        //Destroy(_selectedCubes[1], 2f);
         colorCubesCount -= 2;
         if (colorCubesCount == 0)
         {
@@ -213,6 +214,7 @@ public class Level1Manager : MonoBehaviour
     }
     void MatchWrong()
     {
+        FindObjectOfType<AudioManager>().Play("Wrong");
         Level1Calculator.Instance.wrongSelectCount++;
         if (Level1Calculator.Instance.Score > 30f)
         {
@@ -229,6 +231,8 @@ public class Level1Manager : MonoBehaviour
     {
         if (phasesLeft > 0)
         {
+            FindObjectOfType<AudioManager>().Play("Phase");
+            Timer.Instance.StopTimer();
             SetFalse();
             StartCoroutine(CreateCubes());
         }
@@ -240,6 +244,7 @@ public class Level1Manager : MonoBehaviour
     }
     void EndGameProcess()
     {
+        FindObjectOfType<AudioManager>().Play("EndLevel");
         gameEnded = true;
         endGameScreen.SetActive(true);
         Timer.Instance.StopTimer();
@@ -254,6 +259,7 @@ public class Level1Manager : MonoBehaviour
     }
     public void TimesUpProcess()
     {
+        FindObjectOfType<AudioManager>().Play("TimesUp");
         Time.timeScale = 0f;
         timesUpScreen.SetActive(true);
     }

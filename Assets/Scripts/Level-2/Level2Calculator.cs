@@ -80,21 +80,21 @@ public class Level2Calculator : MonoBehaviour
         if (firstStar)
         {
             firstStarObj.SetActive(true);
-            //FindObjectOfType<AudioManager>().Play("StarSound");
+            FindObjectOfType<AudioManager>().Play("Stars");
             yield return new WaitForSeconds(1f);
         }
         if (secondStar)
         {
-            //FindObjectOfType<AudioManager>().Stop("StarSound");
+            FindObjectOfType<AudioManager>().Play("Stars");
             secondStarObj.SetActive(true);
-            //FindObjectOfType<AudioManager>().Play("StarSound");
+            FindObjectOfType<AudioManager>().Play("Stars");
             yield return new WaitForSeconds(1f);
         }
         if (thirdStar)
         {
-            //FindObjectOfType<AudioManager>().Stop("StarSound");
+            FindObjectOfType<AudioManager>().Play("Stars");
             thirdStarObj.SetActive(true);
-            //FindObjectOfType<AudioManager>().Play("StarSound");
+            FindObjectOfType<AudioManager>().Play("Stars");
         }
     }
 

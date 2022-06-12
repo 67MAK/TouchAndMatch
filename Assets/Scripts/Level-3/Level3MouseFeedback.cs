@@ -36,6 +36,7 @@ public class Level3MouseFeedback : MonoBehaviour
         {
             if (!isCorrected)
             {
+                FindObjectOfType<AudioManager>().Play("CubeSelect");
                 _renderer.material.color = Level3Manager.Instance._colorsOfCubes[_index];
                 Level3Manager.Instance.CubeSelect(_index);
             }

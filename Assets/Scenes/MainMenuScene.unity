@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 23.987}
+  m_AnchoredPosition: {x: 0, y: 23.98706}
   m_SizeDelta: {x: 498, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &25179723
@@ -2004,7 +2004,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2695,7 +2695,7 @@ MonoBehaviour:
     m_FontStyle: 3
     m_BestFit: 1
     m_MinSize: 4
-    m_MaxSize: 90
+    m_MaxSize: 70
     m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 1
@@ -3342,6 +3342,140 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1736295348}
   m_CullTransparentMesh: 1
+--- !u!1 &1814851631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814851632}
+  - component: {fileID: 1814851633}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1814851632
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814851631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1814851633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814851631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed41c72825e9a9543957e329238c838a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: de1d96aa81d979144a3cfd9afa1b20ce, type: 3}
+    name: EternalFire
+    volume: 0.2
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 66b0f2470e1593b47a1dc7f3cbb95ec6, type: 3}
+    name: ThirstyRose
+    volume: 0.2
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: e7f588c489e53734dbc09e600ea25922, type: 3}
+    name: Exhale
+    volume: 0.2
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 518d0b0a015de0b409024163c8877cbf, type: 3}
+    name: MadWorld
+    volume: 0.2
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 5cd294fc34c5efa43a15da61cf56cd3e, type: 3}
+    name: Splash
+    volume: 0.4
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: e4e2746f250a1b14283abba737493ab3, type: 3}
+    name: Floating
+    volume: 0.2
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 65f8de8704d8eee4d8147cec43ae1808, type: 3}
+    name: Waterfall
+    volume: 0.15
+    loop: 1
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
+    name: Click
+    volume: 1
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
+    name: Wrong
+    volume: 0.6
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: c5e2a73ad4706440f93bf05df0b465fe, type: 3}
+    name: Last10
+    volume: 1
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
+    name: EndLevel
+    volume: 0.7
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+    name: CubeSelect
+    volume: 0.6
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
+    name: Phase
+    volume: 0.7
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+    name: Correct
+    volume: 0.6
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+    name: CubeIns
+    volume: 0.3
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: df729d213c4be44a9b55cd109f5cd4f9, type: 3}
+    name: TimesUp
+    volume: 0.7
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0994c12e202f342459a4212e7287f7e8, type: 3}
+    name: SetColor
+    volume: 0.3
+    loop: 0
+  - source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
+    name: Stars
+    volume: 0.7
+    loop: 0
 --- !u!1 &1843483303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3456,7 +3590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 23.987}
+  m_AnchoredPosition: {x: 0, y: 23.98706}
   m_SizeDelta: {x: 498, y: 128}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1954764001
