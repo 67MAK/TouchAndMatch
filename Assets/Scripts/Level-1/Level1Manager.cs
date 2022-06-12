@@ -205,8 +205,8 @@ public class Level1Manager : MonoBehaviour
         _selectedCubes[0].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
         _selectedCubes[1].AddComponent<Rigidbody>();
         _selectedCubes[1].GetComponent<Rigidbody>().AddForce(Vector3.up * 150f);
-        Destroy(_selectedCubes[0], 2f);
-        Destroy(_selectedCubes[1], 2f);
+        //Destroy(_selectedCubes[0], 2f);
+        //Destroy(_selectedCubes[1], 2f);
         colorCubesCount -= 2;
         if (colorCubesCount == 0)
         {
