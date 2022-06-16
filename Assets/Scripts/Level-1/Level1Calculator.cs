@@ -21,17 +21,6 @@ public class Level1Calculator : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void CalculateScore()
     {
         Score += Timer.Instance.GetDuration() * 10;
@@ -61,9 +50,9 @@ public class Level1Calculator : MonoBehaviour
     }
     void CalculateStars()
     {
-        if (Level2Manager.Instance.gameEnded) firstStar = true;
-        if (wrongSelectCount <= 12) secondStar = true;
-        if (Timer.Instance.GetDuration() > 59f) thirdStar = true;
+        if (Level1Manager.Instance.gameEnded) firstStar = true;
+        if (wrongSelectCount <= 6) secondStar = true;
+        if (Timer.Instance.GetDuration() > 30f) thirdStar = true;
     }
 
     public void SetEndGameText()

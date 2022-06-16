@@ -19,7 +19,7 @@ public class Level3Calculator : MonoBehaviour
         {
             Instance = this;
         }
-        showColorHintCount = 5;
+        showColorHintCount = 9;
         showColorCountLeftText.text = "Hint Left : " + showColorHintCount;
     }
 

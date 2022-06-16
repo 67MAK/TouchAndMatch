@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Level1MenuManager : MonoBehaviour
 {
-
+    [SerializeField] GameObject muteMusicButton, muteSoundsButton;
+    int i = 0, j = 0;
     public void RestartButton()
     {
         FindObjectOfType<AudioManager>().Play("Click");
@@ -47,5 +49,40 @@ public class Level1MenuManager : MonoBehaviour
         Level1Manager.Instance.gamePaused = false;
         Time.timeScale = 1f;
         Level1Manager.Instance.Invoke("SetCanSelect", 0.5f);
+    }
+
+    public void MuteMusicButton()
+    {
+        if (i == 0)
+        {
+            FindObjectOfType<AudioManager>().Stop("Floating");
+            muteMusicButton.GetComponent<Image>().color = Color.red;
+            i = 1;
+        }
+        else if (i == 1)
+        {
+            FindObjectOfType<AudioManager>().Play("Floating");
+            muteMusicButton.GetComponent<Image>().color = Color.green;
+            i = 0;
+        }
+    }
+    public void MuteSoundsButton()
+    {
+        if (j == 0)
+        {
+            FindObjectOfType<AudioManager>().isMuted = true;
+            FindObjectOfType<AudioManager>().Stop("Waterfall");
+            FindObjectOfType<AudioManager>().Stop("Floating");
+            muteSoundsButton.GetComponent<Image>().color = Color.red;
+            j = 1;
+        }
+        else if (j == 1)
+        {
+            FindObjectOfType<AudioManager>().isMuted = false;
+            FindObjectOfType<AudioManager>().Play("Waterfall");
+            FindObjectOfType<AudioManager>().Play("Floating");
+            muteSoundsButton.GetComponent<Image>().color = Color.green;
+            j = 0;
+        }
     }
 }
