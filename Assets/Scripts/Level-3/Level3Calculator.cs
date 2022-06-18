@@ -57,6 +57,10 @@ public class Level3Calculator : MonoBehaviour
         if (wrongSelectCount <= 16) secondStar = true;
         if (Timer.Instance.GetDuration() > 59f) thirdStar = true;
     }
+    void SendScoreToDataManager()
+    {
+        DataManager.Instance.Level1Score = Score;
+    }
     public void SetEndGameText()
     {
         CalculateStars();
@@ -71,6 +75,8 @@ public class Level3Calculator : MonoBehaviour
             timeLeftText.text = "Time Left : 0" + Timer.Instance.durationMinute + ":0" + Timer.Instance.durationSecond;
         }
         scoreText.text = "Total Score : " + Score;
+        SendScoreToDataManager();
+        DataManager.Instance.SaveData();
         StartCoroutine(SetActiveStars());
     }
 

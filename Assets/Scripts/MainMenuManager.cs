@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    [SerializeField] GameObject optionsScreen, levelsScreen, muteMusicButton, muteSoundsButton;
-    [SerializeField] Text creditsText;
+    [SerializeField] GameObject optionsScreen, levelsScreen, highscoresScreen, muteMusicButton, muteSoundsButton;
+    [SerializeField] Text creditsText, level1ScoreText, level2ScoreText, level3ScoreText;
     string musicStringToPlay;
     int creditsIndex = 0;
     int i = 0, j = 0;
@@ -23,10 +23,48 @@ public class MainMenuManager : MonoBehaviour
         FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.01f);
         FindObjectOfType<AudioManager>().Play("Waterfall");
     }
+    void HowManyZeros(float score)
+    {
+
+    }
     public void StartButton()
     {
         FindObjectOfType<AudioManager>().Play("Click");
         levelsScreen.SetActive(true);
+    }
+
+    public void HighscoresButton()
+    {
+        FindObjectOfType<AudioManager>().Play("Click");
+        
+        DataManager.Instance.LoadData();
+        highscoresScreen.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level1HighestScore.ToString("0000");
+        highscoresScreen.transform.GetChild(2).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level2HighestScore.ToString("0000");
+        highscoresScreen.transform.GetChild(3).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level3HighestScore.ToString("0000");
+        highscoresScreen.SetActive(true);
+
+    }
+    public void CloseHighscores()
+    {
+        highscoresScreen.gameObject.SetActive(false);
+    }
+    public void ResetLevel1Button()
+    {
+        DataManager.Instance.level1HighestScore = 0f;
+        DataManager.Instance.SaveData();
+        highscoresScreen.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "0000";
+    }
+    public void ResetLevel2Button()
+    {
+        DataManager.Instance.level2HighestScore = 0f;
+        DataManager.Instance.SaveData();
+        highscoresScreen.transform.GetChild(2).transform.GetChild(1).GetComponent<Text>().text = "0000";
+    }
+    public void ResetLevel3Button()
+    {
+        DataManager.Instance.level3HighestScore = 0f;
+        DataManager.Instance.SaveData();
+        highscoresScreen.transform.GetChild(3).transform.GetChild(1).GetComponent<Text>().text = "0000";
     }
     public void CloseLevels()
     {
