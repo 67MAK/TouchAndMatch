@@ -20,7 +20,7 @@ public class MainMenuManager : MonoBehaviour
         else if (rand == 2) musicStringToPlay = "Exhale";
         else if (rand == 3) musicStringToPlay = "EternalFire";
         FindObjectOfType<AudioManager>().Play(musicStringToPlay);
-        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.01f);
+        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.15f);
         FindObjectOfType<AudioManager>().Play("Waterfall");
     }
     void HowManyZeros(float score)
@@ -51,20 +51,23 @@ public class MainMenuManager : MonoBehaviour
     public void ResetLevel1Button()
     {
         DataManager.Instance.level1HighestScore = 0f;
+        DataManager.Instance.Level1Score = 0f;
         DataManager.Instance.SaveData();
-        highscoresScreen.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = "0000";
+        highscoresScreen.transform.GetChild(1).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level1HighestScore.ToString("0000");
     }
     public void ResetLevel2Button()
     {
         DataManager.Instance.level2HighestScore = 0f;
+        DataManager.Instance.Level2Score = 0f;
         DataManager.Instance.SaveData();
-        highscoresScreen.transform.GetChild(2).transform.GetChild(1).GetComponent<Text>().text = "0000";
+        highscoresScreen.transform.GetChild(2).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level2HighestScore.ToString("0000");
     }
     public void ResetLevel3Button()
     {
         DataManager.Instance.level3HighestScore = 0f;
+        DataManager.Instance.Level3Score = 0f;
         DataManager.Instance.SaveData();
-        highscoresScreen.transform.GetChild(3).transform.GetChild(1).GetComponent<Text>().text = "0000";
+        highscoresScreen.transform.GetChild(3).transform.GetChild(1).GetComponent<Text>().text = DataManager.Instance.level3HighestScore.ToString("0000");
     }
     public void CloseLevels()
     {

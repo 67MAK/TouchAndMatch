@@ -40,7 +40,7 @@ public class Level3Manager : MonoBehaviour
     }
     void Start()
     {
-        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.1f);
+        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.3f);
         FindObjectOfType<AudioManager>().Play("Waterfall");
         FindObjectOfType<AudioManager>().Play("Floating");
         canSelect = false;
@@ -256,8 +256,8 @@ public class Level3Manager : MonoBehaviour
         if (phasesLeft > 0)
         {
             FindObjectOfType<AudioManager>().Play("Phase");
-            Timer.Instance.StopTimer();
             SetFalse();
+            Timer.Instance.StopTimer();
             isColorHiding = false;
             StartCoroutine(CreateCubes());
         }
@@ -274,7 +274,7 @@ public class Level3Manager : MonoBehaviour
         FindObjectOfType<AudioManager>().Stop("Floating");
         FindObjectOfType<AudioManager>().Play("EndLevel");
         gameEnded = true;
-        Timer.Instance.StartTimer();
+        Timer.Instance.StopTimer();
         endGameScreen.SetActive(true);
         Level3Calculator.Instance.SetEndGameText();
     }

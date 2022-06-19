@@ -59,7 +59,7 @@ public class Level3Calculator : MonoBehaviour
     }
     void SendScoreToDataManager()
     {
-        DataManager.Instance.Level1Score = Score;
+        DataManager.Instance.Level3Score = Score;
     }
     public void SetEndGameText()
     {

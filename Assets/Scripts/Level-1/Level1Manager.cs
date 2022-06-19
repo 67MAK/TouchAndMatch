@@ -41,7 +41,7 @@ public class Level1Manager : MonoBehaviour
     }
     void Start()
     {
-        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.1f);
+        FindObjectOfType<AudioManager>().SetVolume("Waterfall", 0.3f);
         FindObjectOfType<AudioManager>().Play("Waterfall");
         FindObjectOfType<AudioManager>().Play("Floating");
         gameEnded = false;
