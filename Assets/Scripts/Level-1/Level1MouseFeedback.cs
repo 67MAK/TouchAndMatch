@@ -23,7 +23,7 @@ public class Level1MouseFeedback : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused)
+        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused && !Level1Manager.Instance.canSelect)
         {
             transform.localScale += new Vector3(0, 0.2f, 0);
         }
@@ -43,7 +43,7 @@ public class Level1MouseFeedback : MonoBehaviour
     }
     private void OnMouseExit()
     {
-        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused)
+        if (Level1Manager.Instance.isColorHiding && !Level1Manager.Instance.gamePaused && !Level1Manager.Instance.canSelect)
         {
             transform.localScale -= new Vector3(0, 0.2f, 0);
         }

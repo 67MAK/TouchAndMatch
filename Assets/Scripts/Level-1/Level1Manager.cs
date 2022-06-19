@@ -267,6 +267,7 @@ public class Level1Manager : MonoBehaviour
         FindObjectOfType<AudioManager>().Stop("Floating");
         FindObjectOfType<AudioManager>().Play("TimesUp");
         gameEnded = true;
+        canSelect = false;
         Time.timeScale = 0f;
         timesUpScreen.SetActive(true);
     }
